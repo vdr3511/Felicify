@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Shopping List</h2>
+  <form action="/shopping" method="post" class="form-inline">
+    <input name="name" placeholder="Item name" required>
+    <input name="qty" placeholder="Qty">
+    <button class="btn">Add</button>
+  </form>
+  <ul class="list">
+    {% for i in items %}
+      <li class="{{ 'done' if i.bought else '' }}">
+        <div>
+          <strong>{{ i.name }}</strong> <span class="muted">{{ i.qty }}</span>
+        </div>
+        <div class="actions">
+          <a href="/shopping/{{ i.id }}/toggle" class="btn small">Toggle Bought</a>
+        </div>
+      </li>
+    {% else %}
+      <li class="muted">No items</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

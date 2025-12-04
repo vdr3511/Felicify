@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Tasks</h2>
+  <form action="/tasks" method="post" class="form-inline">
+    <input name="title" placeholder="New task" required>
+    <input name="due_date" type="date">
+    <button class="btn">Add Task</button>
+  </form>
+
+  <ul class="list">
+    {% for t in tasks %}
+      <li class="task {{ 'done' if t.done else '' }}">
+        <div>
+          <strong>{{ t.title }}</strong>
+          {% if t.due_date %}<span class="muted"> • due {{ t.due_date.date() }}</span>{% endif %}
+          <div class="tiny muted">{{ t.notes }}</div>
+        </div>
+        <div class="actions">
+          <a href="/tasks/{{ t.id }}/toggle" class="btn small">Toggle</a>
+          <a href="/tasks/{{ t.id }}/delete" class="btn small danger">Delete</a>
+        </div>
+      </li>
+    {% else %}
+      <li class="muted">No tasks</li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Household Members</h2>
+  <form action="/members" method="post" class="form-inline">
+    <input name="name" placeholder="Full name" required>
+    <input name="role" placeholder="Role (optional)">
+    <button class="btn">Add Member</button>
+  </form>
+  <ul class="list">
+    {% for m in members %}
+      <li>
+        <div><strong>{{ m.name }}</strong> <span class="muted">{{ m.role }}</span></div>
+      </li>
+    {% else %}
+      <li class="muted">No members added</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

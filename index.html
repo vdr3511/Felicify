@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+  <section class="grid">
+    <div class="card">
+      <h2>Quick Tasks</h2>
+      <form action="/tasks" method="post" class="form-inline">
+        <input name="title" placeholder="New task" required>
+        <input type="date" name="due_date">
+        <button class="btn">Add</button>
+      </form>
+      <ul class="compact-list">
+        {% for t in tasks %}
+          <li class="small {{ 'done' if t.done else '' }}">{{ t.title }} {% if t.due_date %} • due {{ t.due_date.date() }}{% endif %}</li>
+        {% else %}
+          <li class="small muted">No tasks yet</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Recent Expenses</h2>
+      <form action="/expenses" method="post" class="form-inline">
+        <input name="description" placeholder="Description" required>
+        <input name="amount" placeholder="0.00" type="number" step="0.01" required>
+        <button class="btn">Add</button>
+      </form>
+      <div class="muted">Total: ${{ '%.2f'|format(total_expenses) }}</div>
+      <ul class="compact-list">
+        {% for e in expenses %}
+          <li class="small">{{ e.description }} — ${{ '%.2f'|format(e.amount) }}</li>
+        {% else %}
+          <li class="small muted">No expenses yet</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Shopping</h2>
+      <form action="/shopping" method="post" class="form-inline">
+        <input name="name" placeholder="Item name" required>
+        <input name="qty" placeholder="Qty">
+        <button class="btn">Add</button>
+      </form>
+      <ul class="compact-list">
+        {% for i in items %}
+          <li class="small {{ 'done' if i.bought else '' }}">{{ i.name }} {% if i.qty %}• {{ i.qty }}{% endif %}</li>
+        {% else %}
+          <li class="small muted">No items</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Members</h2>
+      <form action="/members" method="post" class="form-inline">
+        <input name="name" placeholder="Name" required>
+        <input name="role" placeholder="Role">
+        <button class="btn">Add</button>
+      </form>
+      <ul class="compact-list">
+        {% for m in members %}
+          <li class="small">{{ m.name }} {% if m.role %}• {{ m.role }}{% endif %}</li>
+        {% else %}
+          <li class="small muted">No members</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+{% endblock %}
